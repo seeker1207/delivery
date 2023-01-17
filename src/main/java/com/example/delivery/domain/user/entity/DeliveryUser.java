@@ -4,10 +4,7 @@ import com.example.delivery.domain.user.exception.UserInvalidPasswordException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Objects;
 
@@ -20,24 +17,27 @@ public class DeliveryUser {
     @Id
     @GeneratedValue
     public Long id;
+    @NonNull
     private String userId;
+    @NonNull
     private String password;
+    @NonNull
     private String username;
 
 
     public DeliveryUser(Long id, String userId, String password, String username) {
         this.id = id;
-        this.userId = Objects.requireNonNull(userId);
+        this.userId = userId;
 
         validatePassword(password);
-        this.password = Objects.requireNonNull(password);
-        this.username = Objects.requireNonNull(username);
+        this.password = password;
+        this.username = username;
     }
 
     void validatePassword(String id){
         // 영어 대문자, 영어 소문자, 숫자, 특수문자 중 3종류 이상 and 12자리 이상
 //        String regex = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&-+=()]).{12,}$";
-        int i = 0;
+        var i = 0;
         if (id.matches(".*[0-9].*")) i++;
         if (id.matches(".*[a-z].*")) i++;
         if (id.matches(".*[A-Z].*")) i++;
