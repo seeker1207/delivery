@@ -15,7 +15,7 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class User {
+public class DeliveryUser {
 
     @Id
     @GeneratedValue
@@ -25,7 +25,7 @@ public class User {
     private String username;
 
 
-    public User(Long id, String userId, String password, String username) {
+    public DeliveryUser(Long id, String userId, String password, String username) {
         this.id = id;
         this.userId = Objects.requireNonNull(userId);
 
