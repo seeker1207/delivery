@@ -29,7 +29,5 @@ public class DeliveryService {
         DeliveryOrder newDeliveryOrder = DeliveryOrder.makeDeliveryOrder(user, deliveryItemList);
 
         deliveryOrderRepository.save(newDeliveryOrder);
-
-
     }
 }

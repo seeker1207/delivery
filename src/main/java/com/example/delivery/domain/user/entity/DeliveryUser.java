@@ -1,11 +1,12 @@
 package com.example.delivery.domain.user.entity;
 
+import com.example.delivery.domain.deliveryorder.entity.DeliveryOrder;
 import com.example.delivery.domain.user.exception.UserInvalidPasswordException;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Builder
@@ -16,7 +17,11 @@ public class DeliveryUser {
 
     @Id
     @GeneratedValue
+    @Column(name = "delivery_user_id")
     public Long id;
+
+    @OneToMany
+    private List<DeliveryOrder> deliveryOrderList = new ArrayList<>();
     @NonNull
     private String userId;
     @NonNull
@@ -25,9 +30,10 @@ public class DeliveryUser {
     private String username;
 
 
-    public DeliveryUser(Long id, String userId, String password, String username) {
+    public DeliveryUser(Long id, String userId, String password, String username, List<DeliveryOrder> deliveryOrderList) {
         this.id = id;
         this.userId = userId;
+        this.deliveryOrderList.addAll(deliveryOrderList);
 
         validatePassword(password);
         this.password = password;
