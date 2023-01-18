@@ -18,12 +18,12 @@ import java.util.List;
 public class DeliveryOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "delivery_id")
+    @Column(name = "delivery_order_id")
     private long id;
     @ManyToOne
-    @JoinColumn(referencedColumnName = "delivery_user_id")
+    @JoinColumn(referencedColumnName = "id")
     private DeliveryUser deliveryUser;
-    @OneToMany
+    @OneToMany(mappedBy = "deliveryOrder")
     private List<DeliveryItem> deliveryItemList = new ArrayList<>();
 
     private LocalDateTime orderDate;

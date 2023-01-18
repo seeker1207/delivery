@@ -14,7 +14,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class DeliveryService {
+public class DeliveryOrderService {
     private final DeliveryItemRepository deliveryItemRepository;
     private final DeliveryOrderRepository deliveryOrderRepository;
     private final DeliveryUserRepository deliveryUserRepository;

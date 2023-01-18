@@ -17,10 +17,9 @@ public class DeliveryUser {
 
     @Id
     @GeneratedValue
-    @Column(name = "delivery_user_id")
     public Long id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "deliveryUser")
     private List<DeliveryOrder> deliveryOrderList = new ArrayList<>();
     @NonNull
     private String userId;
@@ -30,7 +29,7 @@ public class DeliveryUser {
     private String username;
 
 
-    public DeliveryUser(Long id, String userId, String password, String username, List<DeliveryOrder> deliveryOrderList) {
+    public DeliveryUser(Long id, List<DeliveryOrder> deliveryOrderList, String userId, String password, String username) {
         this.id = id;
         this.userId = userId;
         this.deliveryOrderList.addAll(deliveryOrderList);
