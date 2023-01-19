@@ -16,7 +16,7 @@ import java.util.Objects;
 public class DeliveryUser {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     @OneToMany(mappedBy = "deliveryUser")
