@@ -5,8 +5,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
-
 import java.time.LocalDateTime;
 
 @Builder
@@ -16,12 +14,10 @@ import java.time.LocalDateTime;
 public class DeliveryItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "delivery_item_id")
     private Long id;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "delivery_order_id")
+    @JoinColumn(referencedColumnName = "id")
     private DeliveryOrder deliveryOrder;
-
     private String itemName;
     private int count;
     private LocalDateTime creatAt;
@@ -32,5 +28,13 @@ public class DeliveryItem {
         this.itemName = itemName;
         this.count = count;
         this.creatAt = creatAt == null ? LocalDateTime.now() : creatAt;
+    }
+
+    public static DeliveryItem makeDeliveryItem(DeliveryOrder deliveryOrder, String itemName, int count) {
+        return DeliveryItem.builder()
+                .deliveryOrder(deliveryOrder)
+                .itemName(itemName)
+                .count(count)
+                .build();
     }
 }

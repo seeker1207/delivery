@@ -1,19 +1,19 @@
 package com.example.delivery.domain.deliveryorder.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 public class DeliveryOrderDto {
-    private List<Long> deliveryItemIdList;
+    private List<DeliveryOrderItemDto> deliveryItemList;
     private Long deliveryUserId;
-    private String fromAddress;
     private String toAddress;
+    private String remark;
 
 
 }

@@ -25,16 +25,20 @@ public class DeliveryOrderService {
         Long userId = deliveryOrderDto.getDeliveryUserId();
         List<DeliveryOrderItemDto> deliveryOrderItemDtoList = deliveryOrderDto.getDeliveryItemList();
         String toAddress = deliveryOrderDto.getToAddress();
+        String remark = deliveryOrderDto.getRemark();
 
         DeliveryUser user = deliveryUserRepository.findById(userId).orElseThrow();
 
-        List<DeliveryItem> deliveryItemList = new ArrayList<>();
-        for (DeliveryOrderItemDto deliveryItem : deliveryOrderItemDtoList) {
-            deliveryItemList.add(DeliveryItem.makeDeliveryItem(deliveryItem.getOrderItemName(), deliveryItem.getCount()));
-        }
-
-        DeliveryOrder newDeliveryOrder = DeliveryOrder.makeDeliveryOrder(user, deliveryItemList, toAddress);
+        DeliveryOrder newDeliveryOrder = DeliveryOrder.makeDeliveryOrder(user, toAddress, remark);
 
         deliveryOrderRepository.save(newDeliveryOrder);
+
+        List<DeliveryItem> newDeliveryItemList = new ArrayList<>();
+        for (DeliveryOrderItemDto deliveryItem : deliveryOrderItemDtoList) {
+            newDeliveryItemList.add(DeliveryItem.makeDeliveryItem(
+                    newDeliveryOrder, deliveryItem.getOrderItemName(), deliveryItem.getCount()));
+        }
+
+        deliveryItemRepository.saveAll(newDeliveryItemList);
     }
 }
