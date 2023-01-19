@@ -2,15 +2,13 @@ package com.example.delivery.domain.deliveryorder.entity;
 
 import com.example.delivery.domain.user.entity.DeliveryUser;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+//@ToString
 @Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

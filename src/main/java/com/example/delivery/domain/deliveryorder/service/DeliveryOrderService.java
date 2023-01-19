@@ -11,6 +11,7 @@ import com.example.delivery.domain.user.repository.DeliveryUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,5 +41,9 @@ public class DeliveryOrderService {
         }
 
         deliveryItemRepository.saveAll(newDeliveryItemList);
+    }
+
+    public DeliveryOrder getDeliveryOrderByDate(LocalDateTime startDate, LocalDateTime endDate) {
+        return null;
     }
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+//@ToString
 @Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,7 +33,9 @@ public class DeliveryUser {
     public DeliveryUser(Long id, List<DeliveryOrder> deliveryOrderList, String userId, String password, String username) {
         this.id = id;
         this.userId = userId;
-        this.deliveryOrderList.addAll(deliveryOrderList);
+        if (deliveryOrderList != null && deliveryOrderList.size() > 0) {
+            this.deliveryOrderList.addAll(deliveryOrderList);
+        }
 
         validatePassword(password);
         this.password = password;
