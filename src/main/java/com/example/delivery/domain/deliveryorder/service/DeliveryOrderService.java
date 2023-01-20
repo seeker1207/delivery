@@ -30,12 +30,14 @@ public class DeliveryOrderService {
         String toAddress = deliveryOrderDto.getToAddress();
         String remark = deliveryOrderDto.getRemark();
 
+        // 새로운 배달정보 생성 및 저장
         DeliveryUser user = deliveryUserRepository.findByUserId(userId).orElseThrow();
 
         DeliveryOrder newDeliveryOrder = DeliveryOrder.makeDeliveryOrder(user, toAddress, remark);
 
         deliveryOrderRepository.save(newDeliveryOrder);
 
+        // 새로운 배달 아이템 생성 및 저장
         List<DeliveryItem> newDeliveryItemList = new ArrayList<>();
         for (DeliveryOrderItemDto deliveryItem : deliveryOrderItemDtoList) {
             newDeliveryItemList.add(DeliveryItem.makeDeliveryItem(
@@ -44,6 +46,7 @@ public class DeliveryOrderService {
 
         List<DeliveryItem> deliveryItemList = deliveryItemRepository.saveAll(newDeliveryItemList);
 
+        // 배달 주문 엔티티에 배달 아이템 저장
         newDeliveryOrder.addDeliveryItem(deliveryItemList);
 
         return newDeliveryOrder;
