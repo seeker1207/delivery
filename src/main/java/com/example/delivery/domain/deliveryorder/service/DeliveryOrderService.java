@@ -4,6 +4,7 @@ import com.example.delivery.domain.deliveryorder.dto.DeliveryOrderDto;
 import com.example.delivery.domain.deliveryorder.dto.DeliveryOrderItemDto;
 import com.example.delivery.domain.deliveryorder.entity.DeliveryItem;
 import com.example.delivery.domain.deliveryorder.entity.DeliveryOrder;
+import com.example.delivery.domain.deliveryorder.exception.TooLongDaysFromStartDateToEndDateException;
 import com.example.delivery.domain.deliveryorder.repository.DeliveryItemRepository;
 import com.example.delivery.domain.deliveryorder.repository.DeliveryOrderRepository;
 import com.example.delivery.domain.user.entity.DeliveryUser;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +25,12 @@ public class DeliveryOrderService {
     private final DeliveryUserRepository deliveryUserRepository;
 
     public void createDeliveryOrder(DeliveryOrderDto deliveryOrderDto) {
-        Long userId = deliveryOrderDto.getDeliveryUserId();
+        String userId = deliveryOrderDto.getDeliveryUserId();
         List<DeliveryOrderItemDto> deliveryOrderItemDtoList = deliveryOrderDto.getDeliveryItemList();
         String toAddress = deliveryOrderDto.getToAddress();
         String remark = deliveryOrderDto.getRemark();
 
-        DeliveryUser user = deliveryUserRepository.findById(userId).orElseThrow();
+        DeliveryUser user = deliveryUserRepository.findByUserId(userId).orElseThrow();
 
         DeliveryOrder newDeliveryOrder = DeliveryOrder.makeDeliveryOrder(user, toAddress, remark);
 
@@ -44,6 +46,10 @@ public class DeliveryOrderService {
     }
 
     public List<DeliveryOrder> getDeliveryOrderByDate(String userId, LocalDateTime startDate, LocalDateTime endDate) {
+        if (ChronoUnit.DAYS.between(startDate, endDate) > 3L) {
+            throw new TooLongDaysFromStartDateToEndDateException();
+        }
+
         return deliveryOrderRepository.findAllByDeliveryUserIdAndOrderDateBetween(userId, startDate, endDate);
     }
 }

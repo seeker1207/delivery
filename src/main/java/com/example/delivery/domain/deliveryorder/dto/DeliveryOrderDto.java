@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class DeliveryOrderDto {
     private List<DeliveryOrderItemDto> deliveryItemList;
-    private Long deliveryUserId;
+    private String deliveryUserId;
     private String toAddress;
     private String remark;
 
