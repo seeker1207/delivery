@@ -52,5 +52,9 @@ public class DeliveryOrder {
                 .build();
     }
 
+    public void addDeliveryItem(List<DeliveryItem> deliveryItemList) {
+        this.deliveryItemList.addAll(deliveryItemList);
+    }
+
 
 }

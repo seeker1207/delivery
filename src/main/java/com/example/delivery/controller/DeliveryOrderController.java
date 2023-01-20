@@ -18,8 +18,8 @@ public class DeliveryOrderController {
 
     @Operation(summary = "배달 주문 저장", description = "유저가 주문한 배달을 저장합니다.")
     @PostMapping("/delivery")
-    public void createDeliveryOrder(@RequestBody DeliveryOrderDto deliveryOrderDto) {
-        deliveryOrderService.createDeliveryOrder(deliveryOrderDto);
+    public DeliveryOrderResponse createDeliveryOrder(@RequestBody DeliveryOrderDto deliveryOrderDto) {
+        return DeliveryOrderResponse.entityToOrderResponse(deliveryOrderService.createDeliveryOrder(deliveryOrderDto));
     }
 
     @Operation(summary = "배달 주문 조회", description = "유저가 지정된 기간안에 주문한 배달을 조회합니다.")
@@ -35,6 +35,5 @@ public class DeliveryOrderController {
                 deliveryOrderService.getDeliveryOrderByDate(userId, startDate, endDate)
         );
     }
-
 
 }

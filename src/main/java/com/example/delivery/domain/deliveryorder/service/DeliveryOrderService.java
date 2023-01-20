@@ -24,7 +24,7 @@ public class DeliveryOrderService {
     private final DeliveryOrderRepository deliveryOrderRepository;
     private final DeliveryUserRepository deliveryUserRepository;
 
-    public void createDeliveryOrder(DeliveryOrderDto deliveryOrderDto) {
+    public DeliveryOrder createDeliveryOrder(DeliveryOrderDto deliveryOrderDto) {
         String userId = deliveryOrderDto.getDeliveryUserId();
         List<DeliveryOrderItemDto> deliveryOrderItemDtoList = deliveryOrderDto.getDeliveryItemList();
         String toAddress = deliveryOrderDto.getToAddress();
@@ -42,7 +42,11 @@ public class DeliveryOrderService {
                     newDeliveryOrder, deliveryItem.getOrderItemName(), deliveryItem.getCount()));
         }
 
-        deliveryItemRepository.saveAll(newDeliveryItemList);
+        List<DeliveryItem> deliveryItemList = deliveryItemRepository.saveAll(newDeliveryItemList);
+
+        newDeliveryOrder.addDeliveryItem(deliveryItemList);
+
+        return newDeliveryOrder;
     }
 
     public List<DeliveryOrder> getDeliveryOrderByDate(String userId, LocalDateTime startDate, LocalDateTime endDate) {
