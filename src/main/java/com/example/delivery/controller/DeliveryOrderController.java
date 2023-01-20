@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,10 +20,13 @@ public class DeliveryOrderController {
     }
 
     @GetMapping("/delivery")
-    public DeliveryOrderResponse getDeliveryOrderByDate(
+    public List<DeliveryOrderResponse> getDeliveryOrderByDate(
+            @RequestParam String userId,
             @RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate) {
-        deliveryOrderService.getDeliveryOrderByDate(startDate, endDate);
-        return null;
+
+        return DeliveryOrderResponse.entityToOrderResponse(
+                deliveryOrderService.getDeliveryOrderByDate(userId, startDate, endDate)
+        );
     }
 
 

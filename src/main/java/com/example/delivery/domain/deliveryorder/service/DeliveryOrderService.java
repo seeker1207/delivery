@@ -43,7 +43,7 @@ public class DeliveryOrderService {
         deliveryItemRepository.saveAll(newDeliveryItemList);
     }
 
-    public DeliveryOrder getDeliveryOrderByDate(LocalDateTime startDate, LocalDateTime endDate) {
-        return null;
+    public List<DeliveryOrder> getDeliveryOrderByDate(String userId, LocalDateTime startDate, LocalDateTime endDate) {
+        return deliveryOrderRepository.findAllByDeliveryUserIdAndOrderDateBetween(userId, startDate, endDate);
     }
 }
