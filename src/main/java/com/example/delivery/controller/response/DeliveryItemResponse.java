@@ -14,15 +14,17 @@ import java.util.List;
 public class DeliveryItemResponse {
     private String itemName;
     private int count;
+
     public static DeliveryItemResponse entityToResponse(DeliveryItem deliveryItem) {
         return DeliveryItemResponse.builder()
                 .itemName(deliveryItem.getItemName())
                 .count(deliveryItem.getCount())
                 .build();
     }
+
     public static List<DeliveryItemResponse> entityToResponse(List<DeliveryItem> deliveryItemList) {
         List<DeliveryItemResponse> result = new ArrayList<>();
-        for (DeliveryItem deliveryItem: deliveryItemList) {
+        for (DeliveryItem deliveryItem : deliveryItemList) {
             result.add(DeliveryItemResponse.entityToResponse(deliveryItem));
         }
         return result;

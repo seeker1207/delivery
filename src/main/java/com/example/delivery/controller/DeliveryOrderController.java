@@ -6,8 +6,8 @@ import com.example.delivery.domain.deliveryorder.service.DeliveryOrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class DeliveryOrderController {
             @Parameter(name = "startDate", description = "시작 날짜 (yyyy-MM-dd'T'HH:mm:ss  ISO 형식으로 입력)")
             @RequestParam LocalDateTime startDate,
             @Parameter(name = "endDate", description = "끝 날짜 (yyyy-MM-dd'T'HH:mm:ss  ISO 형식으로 입력)")
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+            @RequestParam LocalDateTime endDate) {
 
         return DeliveryOrderResponse.entityToOrderResponse(
                 deliveryOrderService.getDeliveryOrderByDate(userId, startDate, endDate)

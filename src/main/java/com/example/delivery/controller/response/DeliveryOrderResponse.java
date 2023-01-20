@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class DeliveryOrderResponse {
-
     private String userId;
     private List<DeliveryItemResponse> deliveryItemResponseList;
     private String toAddress;

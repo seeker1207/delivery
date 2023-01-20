@@ -52,7 +52,7 @@ public class DeliveryUser {
         if (id.matches(".*[@#$%^&-+=()].*")) i++;
 
         if (i < 3 || id.length() < 12) {
-            throw new UserInvalidPasswordException("비밀번호 형식이 잘못 되었습니다.");
+            throw new UserInvalidPasswordException();
         }
     }
 }
