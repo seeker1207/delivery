@@ -9,16 +9,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface DeliveryOrderRepository extends JpaRepository<DeliveryOrder, Long> {
-//    @Query("select do " +
-//            "from DeliveryOrder do " +
-//            "join fetch do.deliveryItemList " +
-//            "where do.deliveryUser.userId = :userId and do.orderDate >= :start and do.orderDate <= :end")
-//    public List<DeliveryOrder> findAllByDeliveryUserIdAndOrderDateBetween(
-//            @Param("userId") String userId, @Param("start")LocalDateTime start, @Param("end") LocalDateTime end);
     @Query("select do " +
             "from DeliveryOrder do " +
             "join fetch do.deliveryItemList " +
-            "where do.deliveryUser.userId = :userId")
-    public List<DeliveryOrder> findAllByDeliveryUserIdAndOrderDateBetween(
-            @Param("userId") String userId);
+            "where do.deliveryUser.userId = :userId and do.orderDate >= :start and do.orderDate <= :end")
+    List<DeliveryOrder> findAllByDeliveryUserIdAndOrderDateBetween(
+            @Param("userId") String userId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 }

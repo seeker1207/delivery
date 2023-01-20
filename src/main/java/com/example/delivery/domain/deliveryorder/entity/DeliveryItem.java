@@ -14,9 +14,10 @@ import java.time.LocalDateTime;
 public class DeliveryItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "delivery_item_id")
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "delivery_order_id")
     private DeliveryOrder deliveryOrder;
     private String itemName;
     private int count;

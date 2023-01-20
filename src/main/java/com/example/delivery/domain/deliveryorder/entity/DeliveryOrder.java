@@ -16,6 +16,7 @@ import java.util.List;
 public class DeliveryOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "delivery_order_id")
     private long id;
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
