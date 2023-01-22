@@ -2,9 +2,12 @@ package com.example.delivery.controller;
 
 import com.example.delivery.controller.response.DeliveryOrderResponse;
 import com.example.delivery.domain.deliveryorder.dto.DeliveryOrderDto;
+import com.example.delivery.domain.deliveryorder.dto.DeliveryOrderToAddressOnlyDto;
+import com.example.delivery.domain.deliveryorder.entity.DeliveryOrder;
 import com.example.delivery.domain.deliveryorder.service.DeliveryOrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,4 +39,14 @@ public class DeliveryOrderController {
         );
     }
 
+    @Operation(summary = "배달 주문 수정", description = "배달 주문 도착지를 수정합니다.")
+    @PatchMapping("/devliery/{deliveryId}")
+    public DeliveryOrderResponse updateDeliveryToAdress(
+            @Parameter(name = "deliveryId", description = "배달 주문의 아이디")
+            @PathParam("deliveryId") Long deliveryId,
+            @RequestBody DeliveryOrderToAddressOnlyDto deliveryOrderToAddressOnlyDto) {
+
+        DeliveryOrder deliveryOrder = deliveryOrderService.updateDeliveryDateInDeliveryOrder(deliveryId, deliveryOrderToAddressOnlyDto.getToAddress());
+        return DeliveryOrderResponse.entityToOrderResponse(deliveryOrder);
+    }
 }

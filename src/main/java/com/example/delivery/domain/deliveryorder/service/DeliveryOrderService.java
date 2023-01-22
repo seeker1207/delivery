@@ -59,4 +59,13 @@ public class DeliveryOrderService {
 
         return deliveryOrderRepository.findAllByDeliveryUserIdAndOrderDateBetween(userId, startDate, endDate);
     }
+
+    public DeliveryOrder updateDeliveryDateInDeliveryOrder(Long deliveryOrderId, String toAddress) {
+        DeliveryOrder deliveryOrder = deliveryOrderRepository.findById(deliveryOrderId).orElseThrow();
+
+        deliveryOrder.updateToAddress(toAddress);
+        deliveryOrderRepository.save(deliveryOrder);
+
+        return deliveryOrder;
+    }
 }

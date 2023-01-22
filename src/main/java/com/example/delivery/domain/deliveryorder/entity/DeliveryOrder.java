@@ -56,5 +56,8 @@ public class DeliveryOrder {
         this.deliveryItemList.addAll(deliveryItemList);
     }
 
+    public void updateToAddress(String toAddress) {
+        this.toAddress = toAddress;
+    }
 
 }
