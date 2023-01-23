@@ -4,17 +4,20 @@ import com.example.delivery.domain.deliveryorder.entity.DeliveryOrder;
 import com.example.delivery.domain.user.exception.UserInvalidPasswordException;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 //@ToString
 @Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class DeliveryUser {
+public class DeliveryUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,10 +30,14 @@ public class DeliveryUser {
     @NonNull
     private String password;
     @NonNull
-    private String username;
+    private String name;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "user_id"))
+    private Set<Authority> authorities;
+    private boolean enabled;
 
-    public DeliveryUser(Long id, List<DeliveryOrder> deliveryOrderList, String userId, String password, String username) {
+    public DeliveryUser(Long id, List<DeliveryOrder> deliveryOrderList, String userId, String password, String name, Set<Authority> authorities, boolean enabled) {
         this.id = id;
         this.userId = userId;
         if (deliveryOrderList != null && deliveryOrderList.size() > 0) {
@@ -38,8 +45,11 @@ public class DeliveryUser {
         }
 
         validatePassword(password);
+
         this.password = password;
-        this.username = username;
+        this.name = name;
+        this.authorities = authorities;
+        this.enabled = enabled;
     }
 
     void validatePassword(String id){
@@ -54,5 +64,30 @@ public class DeliveryUser {
         if (i < 3 || id.length() < 12) {
             throw new UserInvalidPasswordException();
         }
+    }
+
+    @Override
+    public String getUsername() {
+        return userId;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return enabled;
     }
 }
