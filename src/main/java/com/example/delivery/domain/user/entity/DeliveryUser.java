@@ -23,6 +23,7 @@ public class DeliveryUser implements UserDetails {
     @OneToMany(mappedBy = "deliveryUser")
     private List<DeliveryOrder> deliveryOrderList = new ArrayList<>();
     @NonNull
+    @Column(name = "user_id")
     private String userId;
     @NonNull
     private String password;
@@ -84,6 +85,6 @@ public class DeliveryUser implements UserDetails {
     }
 
     public void addAuthority(String authority) {
-        this.authorities.add(Authority.builder().authority(authority).build());
+        this.authorities.add(Authority.builder().authority(authority).userId(this.userId).build());
     }
 }

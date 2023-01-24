@@ -17,7 +17,7 @@ public class Authority implements GrantedAuthority {
 
     @Id
     @Column(name = "user_id")
-    private Long userId;
+    private String userId;
     @Id
     private String authority;
 

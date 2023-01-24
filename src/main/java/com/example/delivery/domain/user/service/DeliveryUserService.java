@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+
 @RequiredArgsConstructor
 @Service
 public class DeliveryUserService implements UserDetailsService {
@@ -23,6 +25,7 @@ public class DeliveryUserService implements UserDetailsService {
         DeliveryUser deliveryUser = DeliveryUser.builder()
                                                 .userId(deliveryUserDto.getUserId())
                                                 .password(new BCryptPasswordEncoder().encode(deliveryUserDto.getPassword()))
+                                                .authorities(new HashSet<>())
                                                 .name(deliveryUserDto.getName())
                                                 .enabled(true)
                                                 .build();
