@@ -30,9 +30,9 @@ class DeliveryOrderRepositoryTest {
         //given
         DeliveryUser deliveryUser =
                 DeliveryUser.builder()
-                        .userId("seeker1207")
+                        .userCustomId("seeker1207")
                         .password("1234!@#$aAabcdefsdf")
-                        .username("테스트")
+                        .name("테스트")
                         .build();
         deliveryUserRepository.save(deliveryUser);
 
