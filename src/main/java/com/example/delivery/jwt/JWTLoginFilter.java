@@ -1,5 +1,6 @@
 package com.example.delivery.jwt;
 
+import com.example.delivery.controller.response.DeliveryUserResponse;
 import com.example.delivery.domain.user.entity.DeliveryUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -39,11 +40,11 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         DeliveryUser deliveryUser = (DeliveryUser) authResult.getPrincipal();
-
+        DeliveryUserResponse deliveryUserResponse = DeliveryUserResponse.entityToUserResponse(deliveryUser);
         response.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + JWTUtil.makeAuthToken(deliveryUser));
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        response.getOutputStream().write(objectMapper.writeValueAsBytes(deliveryUser));
+        response.getOutputStream().write(objectMapper.writeValueAsBytes(deliveryUserResponse));
 
-        super.successfulAuthentication(request, response, chain, authResult);
+//        super.successfulAuthentication(request, response, chain, authResult);
     }
 }

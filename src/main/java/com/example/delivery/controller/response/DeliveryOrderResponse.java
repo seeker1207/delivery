@@ -22,7 +22,7 @@ public class DeliveryOrderResponse {
 
     public static DeliveryOrderResponse entityToOrderResponse(DeliveryOrder deliveryOrder) {
         return DeliveryOrderResponse.builder()
-                .userId(deliveryOrder.getDeliveryUser().getUserId())
+                .userId(deliveryOrder.getDeliveryUser().getUserCustomId())
                 .deliveryItemResponseList(DeliveryItemResponse.entityToResponse(deliveryOrder.getDeliveryItemList()))
                 .toAddress(deliveryOrder.getToAddress())
                 .remark(deliveryOrder.getRemark())

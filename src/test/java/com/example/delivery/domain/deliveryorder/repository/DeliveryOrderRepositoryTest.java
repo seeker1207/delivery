@@ -61,7 +61,7 @@ class DeliveryOrderRepositoryTest {
                         LocalDateTime.of(2023, 1, 19, 0, 1));
 
         DeliveryOrder result = deliveryOrderList.get(0);
-        Assertions.assertEquals("seeker1207", result.getDeliveryUser().getUserId());
+        Assertions.assertEquals("seeker1207", result.getDeliveryUser().getUserCustomId());
         Assertions.assertEquals("교촌 허니콤보 치킨", result.getDeliveryItemList().get(0).getItemName());
         Assertions.assertEquals("서울특별시 행복구 행복동", result.getToAddress());
     }

@@ -14,7 +14,7 @@ public class DeliveryUserResponse {
 
     public static DeliveryUserResponse entityToUserResponse(DeliveryUser deliveryUser) {
         return DeliveryUserResponse.builder()
-                .userId(deliveryUser.getUserId())
+                .userId(deliveryUser.getUserCustomId())
                 .userName(deliveryUser.getName())
                 .build();
     }

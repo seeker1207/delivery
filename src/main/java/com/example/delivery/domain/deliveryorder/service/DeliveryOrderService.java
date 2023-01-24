@@ -31,7 +31,7 @@ public class DeliveryOrderService {
         String remark = deliveryOrderDto.getRemark();
 
         // 새로운 배달정보 생성 및 저장
-        DeliveryUser user = deliveryUserRepository.findByUserId(userId).orElseThrow();
+        DeliveryUser user = deliveryUserRepository.findByUserCustomId(userId).orElseThrow();
 
         DeliveryOrder newDeliveryOrder = DeliveryOrder.makeDeliveryOrder(user, toAddress, remark);
 

@@ -4,8 +4,8 @@ import com.example.delivery.domain.deliveryorder.entity.DeliveryOrder;
 import com.example.delivery.domain.user.exception.UserInvalidPasswordException;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.*;
 
@@ -18,13 +18,13 @@ public class DeliveryUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     public Long id;
 
     @OneToMany(mappedBy = "deliveryUser")
     private List<DeliveryOrder> deliveryOrderList = new ArrayList<>();
     @NonNull
-    @Column(name = "user_id")
-    private String userId;
+    private String userCustomId;
     @NonNull
     private String password;
     @NonNull
@@ -32,19 +32,19 @@ public class DeliveryUser implements UserDetails {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "user_id"))
-    private Set<Authority> authorities = new HashSet<>();
+    private Set<Authority> authorities;
     private boolean enabled;
 
-    public DeliveryUser(Long id, List<DeliveryOrder> deliveryOrderList, String userId, String password, String name, Set<Authority> authorities, boolean enabled) {
+    public DeliveryUser(Long id, List<DeliveryOrder> deliveryOrderList, String userCustomId, String password, String name, Set<Authority> authorities, boolean enabled) {
         this.id = id;
-        this.userId = userId;
+        this.userCustomId = userCustomId;
         if (deliveryOrderList != null && deliveryOrderList.size() > 0) {
             this.deliveryOrderList.addAll(deliveryOrderList);
         }
 
         validatePassword(password);
 
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
         this.name = name;
         this.authorities = authorities;
         this.enabled = enabled;
@@ -66,7 +66,7 @@ public class DeliveryUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userId;
+        return userCustomId;
     }
 
     @Override
@@ -85,6 +85,6 @@ public class DeliveryUser implements UserDetails {
     }
 
     public void addAuthority(String authority) {
-        this.authorities.add(Authority.builder().authority(authority).userId(this.userId).build());
+        this.authorities.add(Authority.builder().authority(authority).userId(this.id).build());
     }
 }

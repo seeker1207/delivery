@@ -12,7 +12,7 @@ public interface DeliveryOrderRepository extends JpaRepository<DeliveryOrder, Lo
     @Query("select do " +
             "from DeliveryOrder do " +
             "join fetch do.deliveryItemList " +
-            "where do.deliveryUser.userId = :userId and do.orderDate >= :start and do.orderDate <= :end")
+            "where do.deliveryUser.userCustomId = :userId and do.orderDate >= :start and do.orderDate <= :end")
     List<DeliveryOrder> findAllByDeliveryUserIdAndOrderDateBetween(
             @Param("userId") String userId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 

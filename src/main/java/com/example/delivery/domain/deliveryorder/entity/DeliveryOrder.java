@@ -19,7 +19,7 @@ public class DeliveryOrder {
     @Column(name = "delivery_order_id")
     private long id;
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id")
+    @JoinColumn(referencedColumnName = "user_id")
     private DeliveryUser deliveryUser;
     @OneToMany(mappedBy = "deliveryOrder", cascade = CascadeType.ALL)
     private List<DeliveryItem> deliveryItemList = new ArrayList<>();
