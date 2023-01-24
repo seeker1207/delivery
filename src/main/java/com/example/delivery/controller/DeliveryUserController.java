@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DeliveryUserController {
     private final DeliveryUserService deliveryUserService;
 
-    @PostMapping("/api/user")
+    @PostMapping("/user")
     public DeliveryUserResponse signup(@RequestBody DeliveryUserDto deliveryUserDto) {
         return DeliveryUserResponse.entityToUserResponse(deliveryUserService.signUp(deliveryUserDto));
     }
