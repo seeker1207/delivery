@@ -1,9 +1,11 @@
 package com.example.delivery.domain.user.service;
 
 import com.example.delivery.domain.user.dto.DeliveryUserDto;
+import com.example.delivery.domain.user.entity.Authority;
 import com.example.delivery.domain.user.entity.DeliveryUser;
 import com.example.delivery.domain.user.repository.DeliveryUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,15 +17,16 @@ import org.springframework.stereotype.Service;
 public class DeliveryUserService implements UserDetailsService {
 
     private final DeliveryUserRepository deliveryUserRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     public DeliveryUser signUp(DeliveryUserDto deliveryUserDto) {
         DeliveryUser deliveryUser = DeliveryUser.builder()
                                                 .userId(deliveryUserDto.getUserId())
-                                                .password(bCryptPasswordEncoder.encode(deliveryUserDto.getPassword()))
+                                                .password(new BCryptPasswordEncoder().encode(deliveryUserDto.getPassword()))
                                                 .name(deliveryUserDto.getName())
                                                 .enabled(true)
                                                 .build();
+        deliveryUser.addAuthority("USER_ROLE");
         deliveryUserRepository.save(deliveryUser);
 
         return deliveryUser;

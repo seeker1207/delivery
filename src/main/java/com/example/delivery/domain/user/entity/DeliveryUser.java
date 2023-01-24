@@ -7,10 +7,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 //@ToString
 @Builder
@@ -34,7 +31,7 @@ public class DeliveryUser implements UserDetails {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "user_id"))
-    private Set<Authority> authorities;
+    private Set<Authority> authorities = new HashSet<>();
     private boolean enabled;
 
     public DeliveryUser(Long id, List<DeliveryOrder> deliveryOrderList, String userId, String password, String name, Set<Authority> authorities, boolean enabled) {
@@ -52,7 +49,7 @@ public class DeliveryUser implements UserDetails {
         this.enabled = enabled;
     }
 
-    void validatePassword(String id){
+    public void validatePassword(String id){
         // 영어 대문자, 영어 소문자, 숫자, 특수문자 중 3종류 이상 and 12자리 이상
 //        String regex = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&-+=()]).{12,}$";
         var i = 0;
@@ -72,11 +69,6 @@ public class DeliveryUser implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
     public boolean isAccountNonExpired() {
         return enabled;
     }
@@ -89,5 +81,9 @@ public class DeliveryUser implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return enabled;
+    }
+
+    public void addAuthority(String authority) {
+        this.authorities.add(Authority.builder().authority(authority).build());
     }
 }
