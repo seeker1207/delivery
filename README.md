@@ -2,7 +2,7 @@
   - 기본적으로 레이어드 아키텍처를 사용하여 구성하였고 도메인 중심의 구조를 구성하려고 하였습니다.
 - repository  설정은 기본 JPA 를 통해 DB와 객체를 맵핑 하려고 했습니다.
 - DB 설정
-  - 기본적으로 mysql을 사용하여 프로젝트를 구성하였으며, application.tml의 datasource 부분을 주석처리하면 기본 h2db를 사용하여 실행됩니다.
+  - 기본적으로 mysql을 사용하여 프로젝트를 구성하였으며, 기본 데이터베이스 이름은 'delivery'이고 application.tml의 datasource 부분을 주석처리하면 기본 h2db를 사용하여 실행됩니다.
 
 - API는 기본적으로 /swagger-ui.html로 이동하여 API 명세서를 볼수 있습니다.
 - 로그인의 경우 controller 단이 아닌 spring security의 filter단에서 구현되어 swagger 페이지에 나와있지 않습니다. 
